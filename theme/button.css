@@ -1,0 +1,16 @@
+.button {
+    background: yellow;
+    padding: 4px 2px;
+    outline-offset: -2px;
+    line-height: 1em;
+    margin: 0 1px;
+}
+
+.button::selection {
+    display: none;
+}
+.ck-editor .js-inline-picker, .ck-editor .picker  {
+  width: 200px;
+  height: inherit;
+  position: inherit;
+}
