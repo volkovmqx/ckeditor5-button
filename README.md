@@ -7,7 +7,7 @@ Button plugin for ckeditor5.
 First, install the build from npm:
 
 ```bash
-yarn add ckeditor5-countdown
+yarn add ckeditor5-button
 ```
 
 Use it in your application:
