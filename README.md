@@ -13,7 +13,7 @@ yarn add ckeditor5-button
 Use it in your application:
 
 ```js
-import Countdown from 'ckeditor5-button';
+import Button from 'ckeditor5-button';
 ```
 
 Add to the array
