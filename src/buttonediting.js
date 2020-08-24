@@ -68,7 +68,7 @@ export default class ButtonEditing extends Plugin {
 		conversion.for( 'upcast' ).elementToElement( {
 			view: {
 				name: 'a',
-				classes: [ 'btn', 'btn-primary' ],
+				classes: [ 'btn', 'btn-es' ],
 				target: '_blank'
 			},
 			model: ( viewElement, modelWriter ) => {
@@ -85,7 +85,7 @@ export default class ButtonEditing extends Plugin {
 		function createButtonView( modelElement, viewWriter ) {
 			const label = modelElement.getAttribute( 'label' );
 			const buttonView = viewWriter.createContainerElement( 'a', {
-				class: 'btn btn-primary',
+				class: 'btn btn-es',
 			});
 
 			const innerText = viewWriter.createText(label);
@@ -101,7 +101,7 @@ export default class ButtonEditing extends Plugin {
 				url = "#affiliate-link";
 			}
 			const buttonView = viewWriter.createContainerElement( 'a', {
-				class: 'btn btn-primary',
+				class: 'btn btn-es',
 				target: '_blank',
 				href: url
 			});
