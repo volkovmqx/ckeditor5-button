@@ -73,14 +73,9 @@ export default class ButtonEditing extends Plugin {
 			},
 			model: ( viewElement, modelWriter ) => {
 				// Extract the "name" from "{name}".
-				console.log(viewElement)
-
 
 				let label = viewElement.getChild( 0 ).data;
 				let url = viewElement.getAttribute("href");
-				console.log(label);
-				console.log(url);
-
 
 				return modelWriter.createElement( 'button', { label, url } );
 			}
