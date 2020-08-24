@@ -49,64 +49,77 @@ export default class ButtonEditing extends Plugin {
 	_defineConverters() {
 		const conversion = this.editor.conversion;
 
-		conversion.for( 'upcast' ).elementToElement( {
-			view: {
-				name: 'span',
-				classes: [ 'button' ]
-			},
-			model: ( viewElement, modelWriter ) => {
-				// Extract the "name" from "{name}".
-				const data = viewElement.getChild( 0 ).data;
-				let label = "";
-				let url = "";
-				if(data.indexOf(' [') !== -1) {
-					label = data.slice( 3 );
-				}
-				else {
-					label = data.slice( 3, data.indexOf(' [') );
-					url = data.slice(data.indexOf(' ['), data.indexOf(']')  )
-				}
-				return modelWriter.createElement( 'button', { label, url } );
-			}
+		conversion.for( 'dataDowncast' ).elementToElement( {
+			model: 'button',
+			view: createButtonViewWithLink
 		} );
 
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'button',
-			view: ( modelItem, viewWriter ) => {
-				const widgetElement = createButtonView( modelItem, viewWriter );
+			view: ( modelElement, viewWriter ) => {
+				// Note: You use a more specialized createEditableElement() method here.
+				const widgetElement = createButtonView( modelElement, viewWriter );
 
-				// Enable widget handling on a button element inside the editing view.
+
 				return toWidget( widgetElement, viewWriter );
 			}
 		} );
 
-		conversion.for( 'dataDowncast' ).elementToElement( {
-			model: 'button',
-			view: createButtonView
-		} );
+		conversion.for( 'upcast' ).elementToElement( {
+			view: {
+				name: 'a',
+				classes: [ 'btn', 'btn-primary' ],
+				target: '_blank'
+			},
+			model: ( viewElement, modelWriter ) => {
+				// Extract the "name" from "{name}".
+				console.log(viewElement)
 
-		// Helper method for both downcast converters.
-		function createButtonView( modelItem, viewWriter ) {
-			const label = modelItem.getAttribute( 'label' );
-			const url = modelItem.getAttribute( 'url' );
 
-			const buttonView = viewWriter.createContainerElement( 'span', {
-				class: 'button',
-				'data-label': label,
-				'data-url': url
+				let label = viewElement.getChild( 0 ).data;
+				let url = viewElement.getAttribute("href");
+				console.log(label);
+				console.log(url);
+
+
+				return modelWriter.createElement( 'button', { label, url } );
+			}
+		});
+
+		// // Helper methods
+		function createButtonView( modelElement, viewWriter ) {
+			const label = modelElement.getAttribute( 'label' );
+			const buttonView = viewWriter.createContainerElement( 'a', {
+				class: 'btn btn-primary',
+			});
+
+			const innerText = viewWriter.createText(label);
+
+			viewWriter.insert( viewWriter.createPositionAt( buttonView, 0 ), innerText );
+
+			return buttonView;
+		}
+		function createButtonViewWithLink( modelElement, viewWriter ) {
+			const label = modelElement.getAttribute( 'label' );
+			let url = modelElement.getAttribute( 'url' );
+			if(url === "") {
+				url = "#affiliate-link";
+			}
+			const buttonView = viewWriter.createContainerElement( 'a', {
+				class: 'btn btn-primary',
+				target: '_blank',
+				href: url
 			});
 
 			// Insert the button name (as a text).
-			let innerText = ''
-			if(url === '') {
-				innerText = viewWriter.createText( '🔳 ' + label);
-			}
-			else {
-				innerText = viewWriter.createText( '🔳 ' + label + ' [' + url +']' );
-			}
+
+			const innerText = viewWriter.createText(label);
+
 			viewWriter.insert( viewWriter.createPositionAt( buttonView, 0 ), innerText );
 
 			return buttonView;
 		}
 	}
+
+
 }

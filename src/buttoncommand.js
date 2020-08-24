@@ -7,29 +7,14 @@ export default class ButtonCommand extends Command {
 		editor.model.change( writer => {
 			// Create a <button> elment with the "name" attribute...
 			const button = writer.createElement( 'button', { label: label, url: url } );
-
 			// ... and insert it into the document.
 			editor.model.insertContent( button );
-
 			// Put the selection on the inserted element.
 			writer.setSelection( button, 'on' );
 		} );
 	}
 
 	refresh() {
-
-
-
-
-
-
-
-
-
-
-
-
-
 		const getSelectedButtonModelWidget = ( selection ) => {
 			const selectedElement = selection.getSelectedElement();
 
@@ -43,17 +28,12 @@ export default class ButtonCommand extends Command {
 		const selection = model.document.selection;
 		const schema = model.schema;
 		const isAllowed = schema.checkChild( selection.focus.parent, 'button' );
-
-
 		const position = selection.getFirstPosition();
 		const selectedButton = getSelectedButtonModelWidget( selection );
-
-
-
 		this.label = selectedButton ? selectedButton.getAttribute( 'label' ) : null;
 		this.url = selectedButton ? selectedButton.getAttribute( 'url' ) : null;
-
+		if(this.url === '#affiliate-link')
+			this.url = null;
 		this.isEnabled = isAllowed;
-
 	}
 }
