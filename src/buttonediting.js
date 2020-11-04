@@ -32,14 +32,10 @@ export default class ButtonEditing extends Plugin {
 		const schema = this.editor.model.schema;
 
 		schema.register( 'button', {
+			inheritAllFrom: '$text',
+
 			// Allow wherever text is allowed:
-			allowWhere: '$text',
-
-			// The button will act as an inline node:
-			isInline: true,
-
-			// The inline widget is self-contained so it cannot be split by the caret and it can be selected:
-			isObject: true,
+			allowWhere: '$block',
 
 			// The button can have many types, like date, name, surname, etc:
 			allowAttributes: [ 'label', 'url' ]
