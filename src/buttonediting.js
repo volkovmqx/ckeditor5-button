@@ -36,7 +36,8 @@ export default class ButtonEditing extends Plugin {
 
 			// Allow wherever text is allowed:
 			allowWhere: '$block',
-
+			// Is Object and does not need anything inside
+			isObject: true,
 			// The button can have many types, like date, name, surname, etc:
 			allowAttributes: [ 'label', 'url' ]
 		} );
